@@ -37,7 +37,7 @@ public class Login extends AppCompatActivity {
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
         if(mFirebaseUser != null && mFirebaseUser.isEmailVerified()){
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
             finish();
         }
     }
@@ -52,7 +52,7 @@ public class Login extends AppCompatActivity {
 
         if (mFirebaseUser != null) {
             if (mFirebaseUser.isEmailVerified()) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 finish();
             } else {
                 Toast.makeText(Login.this, "Please verify Email", Toast.LENGTH_SHORT).show();
@@ -60,28 +60,6 @@ public class Login extends AppCompatActivity {
         }
         else
             Toast.makeText(Login.this, "Error", Toast.LENGTH_SHORT).show();
-
-//        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                if(task.isSuccessful()){
-//                    mFirebaseUser = mFirebaseAuth.getCurrentUser();
-//
-//                    if(mFirebaseUser.isEmailVerified()){
-//                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//                        finish();
-//                    }
-//                    else{
-//                        Toast.makeText(Login.this, "Please verify Email",Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//                else{
-//                    Toast.makeText(Login.this, "Error task",Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-
-
     }
 
     public void register(View view) {

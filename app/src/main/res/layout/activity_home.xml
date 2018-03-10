@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:hapticFeedbackEnabled="false"
+    android:focusableInTouchMode="false"
+    android:contentDescription="hello"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="1">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/foot"
+                android:id="@+id/footsign"
+                android:scaleType="fitXY"
+                android:layout_alignTop="@+id/tv_steps"
+                android:layout_weight="0.01"
+                android:layout_marginTop="22dp"
+                android:layout_marginBottom="20dp" />
+            />
+
+            <TextView
+                android:text="Steps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_steps"
+                android:gravity="center"
+                android:textSize="36sp"
+                android:textColor="@android:color/black"
+                android:paddingTop="20dp"
+                android:layout_alignLeft="@+id/footsign"
+                android:layout_alignStart="@+id/footsign" />
+
+        </LinearLayout>
+        <TextView
+            android:text="/6000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_target"
+            android:layout_below="@+id/tv_steps"
+            android:layout_toLeftOf="@+id/debug"
+            android:layout_toRightOf="@+id/tv_speed"
+            android:layout_toEndOf="@+id/tv_speed"
+            android:gravity="center" />
+        <TextView
+            android:text="Speed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:id="@+id/tv_speed"
+            android:textColor="?attr/actionModeSplitBackground"
+            android:textSize="18sp"
+            android:contextClickable="false"
+            android:longClickable="false"
+            android:layout_below="@+id/tv_target"
+            android:layout_centerHorizontal="true"
+            android:typeface="normal"
+            android:gravity="center"
+            android:paddingBottom="20dp" />
+
+        <com.jjoe64.graphview.GraphView
+            android:layout_width="match_parent"
+            android:layout_height="200dip"
+            android:id="@+id/graph"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+        <TextView
+            android:text="Distance Walked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView6"
+            android:layout_above="@+id/tv_distance"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:paddingTop="30dp" />
+        <TextView
+            android:text="0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_distance"
+            android:layout_marginBottom="34dp"
+            android:layout_above="@+id/tv_cal"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
+
+        <TextView
+        android:text="Calories Burned"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView7"
+        android:layout_above="@+id/tv_cal"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+        <TextView
+        android:text="0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:id="@+id/tv_cal"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="Running Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView8"
+            android:layout_above="@+id/tv_cal"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="0 min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:id="@+id/tv_run"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </LinearLayout>
+    </ScrollView>

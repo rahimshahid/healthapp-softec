@@ -134,13 +134,6 @@ public class Register extends AppCompatActivity {
                                                     }
                                                 });
 
-
-//                                        User user = new User(name.getEditText().getText().toString(),tilEmail.getEditText().getText().toString()
-//                                                ,address.getEditText().getText().toString(),userImage);
-//
-//                                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-//                                        ref.child(mFirebaseAuth.getCurrentUser().getUid()).setValue(user);
-
                                         Toast.makeText(Register.this, "User registered! Please verify email!", Toast.LENGTH_LONG).show();
                                         Intent intent = new Intent(Register.this, Login.class);
                                         startActivity(intent);
@@ -160,7 +153,7 @@ public class Register extends AppCompatActivity {
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
         if(mFirebaseUser != null){
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             finish();
         }
 
