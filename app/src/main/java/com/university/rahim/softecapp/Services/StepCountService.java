@@ -314,6 +314,9 @@ public class StepCountService extends Service implements SensorEventListener {
 
     private void onStepTaken(long time,String sensorUsed){
         //Broadcast that a step is taken
+
+
+
         Intent intent = new Intent("Steps");
         intent.putExtra("stepCount",stepCount );
         intent.putExtra("sensor",sensorUsed);
@@ -325,6 +328,10 @@ public class StepCountService extends Service implements SensorEventListener {
 
 
         intent.putExtra("ranFor",seconds_ran);
+
+        LocalStore.setSteps(this, stepCount);
+        LocalStore.setCals(this,(float)C.caloriesBurned(stepCount));
+        LocalStore.setDistance(this,(float)D.distanceWalkedinMeters(stepCount));
 
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 

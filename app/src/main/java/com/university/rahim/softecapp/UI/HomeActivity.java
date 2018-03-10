@@ -22,12 +22,23 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.PointsGraphSeries;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.university.rahim.softecapp.Services.*;
 
 import com.university.rahim.softecapp.R;
@@ -54,11 +65,11 @@ public class HomeActivity extends AppCompatActivity {
     private DistanceCalculator D;
     private CalorieBurnedCalculator C;
     private int height,weight;
+    private Drawer drawer;
     Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -90,7 +101,75 @@ public class HomeActivity extends AppCompatActivity {
         graph.getViewport().setMaxX(24);
         graph.getViewport().setYAxisBoundsManual(true);
 
+        NavDrawerInit();
     }
+
+    private void NavDrawerInit() {
+        new DrawerBuilder().withActivity(this).build();
+
+        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName("HOME");
+        SecondaryDrawerItem item2 = new SecondaryDrawerItem().withIdentifier(2).withName("Profile");
+        SecondaryDrawerItem item3 = new SecondaryDrawerItem().withIdentifier(2).withName("Statistics");
+        SecondaryDrawerItem item4 = new SecondaryDrawerItem().withIdentifier(2).withName("Logout");
+
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.drawerback)
+                .addProfiles(
+                        new ProfileDrawerItem().withName("Rahim Shahid")
+                                .withEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                                .withIcon(getResources().getDrawable(R.drawable.profile))
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        return false;
+                    }
+                })
+                .build();
+
+        Drawer result = new DrawerBuilder()
+                .withActivity(this)
+                .withAccountHeader(headerResult)
+                .addDrawerItems(
+                        item1,
+                        new DividerDrawerItem(),
+                        item2,
+                        item3,
+                        item4
+                )
+                .withSelectedItem(4)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        // do something with the clicked item :D
+                        switch (position){
+                            case 1:
+                                Intent i = new Intent(HomeActivity.this, MainHomeActivity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i);
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                HomeActivity.this.drawer.closeDrawer();
+                                break;
+                            case 5:
+                                FirebaseAuth.getInstance().signOut();
+                                break;
+                        }
+
+                        return true;
+                    }
+                })
+                .build();
+
+        drawer = result;
+    }
+
+
     private void init_Data(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         weight=prefs.getInt("wight",0);

@@ -29,4 +29,44 @@ public class LocalStore {
         SharedPreferences Prefs = PreferenceManager.getDefaultSharedPreferences(c);
         Prefs.edit().putInt("height", height).apply();
     }
+
+    public static int getSteps(Context c) {
+        SharedPreferences Prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        return Prefs.getInt("steps",0);
+    }
+
+    public static void setSteps(Context c, int steps) {
+        SharedPreferences Prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        Prefs.edit().putInt("steps", steps).apply();
+    }
+
+    public static float getCals(Context c) {
+        SharedPreferences Prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        return Prefs.getFloat("cals",0);
+    }
+
+    public static void setCals(Context c, float steps) {
+        SharedPreferences Prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        Prefs.edit().putFloat("cals", steps).apply();
+    }
+
+    public static float getDistance(Context c) {
+        SharedPreferences Prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        return Prefs.getFloat("dist",0);
+    }
+
+    public static void setDistance(Context c, float steps) {
+        SharedPreferences Prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        Prefs.edit().putFloat("dist", steps/1000).apply();
+    }
+
+    public static void setWorkoutProgress(Context c, int height) {
+        SharedPreferences Prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        Prefs.edit().putInt("prog", height).apply();
+    }
+
+    public static int getWorkoutProgess(Context c) {
+        SharedPreferences Prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        return Prefs.getInt("prog",0);
+    }
 }

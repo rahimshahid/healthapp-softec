@@ -37,7 +37,9 @@ public class Login extends AppCompatActivity {
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
 
         if(mFirebaseUser != null && mFirebaseUser.isEmailVerified()){
-            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+            Intent i = new Intent(Login.this, MainHomeActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
             finish();
         }
     }
@@ -52,7 +54,9 @@ public class Login extends AppCompatActivity {
 
         if (mFirebaseUser != null) {
             if (mFirebaseUser.isEmailVerified()) {
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                Intent i = new Intent(Login.this, MainHomeActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
                 finish();
             } else {
                 Toast.makeText(Login.this, "Please verify Email", Toast.LENGTH_SHORT).show();

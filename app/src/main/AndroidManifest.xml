@@ -8,7 +8,6 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,12 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UI.MainActivity">
-        </activity>
+        <activity android:name=".UI.MainActivity" />
         <activity android:name=".UI.Register" />
         <activity android:name=".UI.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,9 +28,12 @@
 
         <service
             android:name=".Services.StepCountService"
-            android:label="StepCountService" >
-        </service>
+            android:label="StepCountService" />
 
+        <activity
+            android:name=".UI.MainHomeActivity"
+            android:theme="@style/CustomTheme"></activity>
+        <activity android:name=".UI.ProfileActivity"></activity>
     </application>
 
 </manifest>
