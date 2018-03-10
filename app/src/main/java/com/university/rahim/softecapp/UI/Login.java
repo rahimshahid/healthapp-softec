@@ -2,8 +2,10 @@ package com.university.rahim.softecapp.UI;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ public class Login extends AppCompatActivity {
     FirebaseAuth mFirebaseAuth;
     FirebaseUser mFirebaseUser;
 
+    private TextInputLayout tilEmail;
     private EditText mEmail;
     private EditText mPassword;
 
@@ -30,6 +33,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        tilEmail = findViewById(R.id.til_email);
         mEmail = findViewById(R.id.et_email);
         mPassword = findViewById(R.id.et_password);
 
@@ -63,10 +67,43 @@ public class Login extends AppCompatActivity {
             }
         }
         else
-            Toast.makeText(Login.this, "Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login.this, "Error in signing in", Toast.LENGTH_SHORT).show();
     }
 
     public void register(View view) {
         startActivity(new Intent(this,Register.class));
+    }
+
+    public void resetPassword(View view) {
+        if(isValidEmail(tilEmail)){
+            mFirebaseAuth.sendPasswordResetEmail(mEmail.getText().toString().trim()).addOnCompleteListener(
+                    new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(Login.this, "Password reset email sent! Please check email.", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                            else
+                                Toast.makeText(Login.this, "Error", Toast.LENGTH_SHORT)
+                                .show();
+
+                        }
+                    }
+            );
+        }
+    }
+
+    public boolean isValidEmail(TextInputLayout email){
+        String text = email.getEditText().getText().toString().trim();
+
+        if(text.isEmpty()){
+            email.setError("Field required");
+            return false;
+        }else if(text.matches(Patterns.EMAIL_ADDRESS.pattern()))
+            return true;
+
+        email.setError("Invalid Email Address");
+        return false;
     }
 }

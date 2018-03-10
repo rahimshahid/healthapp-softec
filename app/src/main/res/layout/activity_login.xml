@@ -53,6 +53,17 @@ tools:context="com.university.rahim.softecapp.UI.Login">
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     style="?android:textAppearanceSmall"
+    android:text="Forgot Password? Click to Reset"
+    android:textStyle="bold"
+    android:layout_gravity="center_horizontal"
+    android:clickable="true"
+    android:onClick="resetPassword"/>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    style="?android:textAppearanceSmall"
     android:text="Not a user? Register"
     android:textStyle="bold"
     android:layout_gravity="center_horizontal"

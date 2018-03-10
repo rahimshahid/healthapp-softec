@@ -23,6 +23,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.BarGraphSeries;
@@ -39,6 +46,12 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.university.rahim.softecapp.Pojos.Day;
+import com.university.rahim.softecapp.Pojos.Leaderboard;
+import com.university.rahim.softecapp.Pojos.Points;
+import com.university.rahim.softecapp.Pojos.Week;
+import com.university.rahim.softecapp.Pojos.Workout;
+import com.university.rahim.softecapp.Pojos.WorkoutProgram;
 import com.university.rahim.softecapp.Services.*;
 
 import com.university.rahim.softecapp.R;
@@ -48,6 +61,7 @@ import com.university.rahim.softecapp.Utils.FeedReaderDbHelper;
 import com.university.rahim.softecapp.Utils.LocalStore;
 import com.university.rahim.softecapp.Utils.RunningDbHelper;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import static android.os.SystemClock.elapsedRealtime;
@@ -68,8 +82,17 @@ public class HomeActivity extends AppCompatActivity {
     private Drawer drawer;
     Context mContext;
 
+    // Firebase variable
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
+    private FirebaseDatabase mFirebaseDatabase;
+
+    private WorkoutProgram mProgram;
+    private Leaderboard mLeaderboard;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -79,6 +102,16 @@ public class HomeActivity extends AppCompatActivity {
         init_Views();
         init_Data();
         plotGraph();
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+
+        if(mFirebaseUser == null){
+            startActivity(new Intent(getApplicationContext(), Login.class));
+            finish();
+        }
+
 
         //Start Step Service
        StepCountService.Start(this);
@@ -101,7 +134,6 @@ public class HomeActivity extends AppCompatActivity {
         graph.getViewport().setMaxX(24);
         graph.getViewport().setYAxisBoundsManual(true);
 
-        //NavDrawerInit();
     }
 
     private void NavDrawerInit() {
@@ -399,4 +431,82 @@ public class HomeActivity extends AppCompatActivity {
 
         }
     };
+
+    public void logout(View view) {
+        FirebaseAuth.getInstance().signOut();
+    }
+
+    public WorkoutProgram getProgram(){
+
+        DatabaseReference dbRef = mFirebaseDatabase.getReference("Workouts");
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Week> weeks = new ArrayList<>();
+
+                ArrayList<Day> days= new ArrayList<>();
+
+                for(DataSnapshot i : dataSnapshot.getChildren()) {       // Day
+
+                    ArrayList<Workout> exercises = new ArrayList<>();
+                    for (DataSnapshot j : i.getChildren()) {    // Exercise
+                            Workout workout = j.getValue(Workout.class);
+                            System.out.println(workout.toString());
+                            exercises.add(workout);
+                    }
+                    days.add(new Day(exercises));
+                    System.out.println("Days");
+                    System.out.println(days.toString());
+
+                }
+
+                int numOfWeeksinProgram = 3;
+
+                weeks.add(new Week(days));
+                for(int i = 0; i < numOfWeeksinProgram; ++i)
+                    weeks.add(weeks.get(0));
+
+                mProgram = new WorkoutProgram(weeks);
+
+                Log.d("Usman_Program", mProgram.toString());
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        return mProgram;
+    }
+
+    public Leaderboard getLeaderboard(){
+        DatabaseReference dbRef = mFirebaseDatabase.getReference("Leaderboard");
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Points> pointsList = new ArrayList<>();
+                for(DataSnapshot i : dataSnapshot.getChildren()){
+                    Points points = i.getValue(Points.class);
+                    points.setUid(i.getKey());
+                    Log.d("Usman_Leaderboard", points.getUid()+" " +points.getName());
+
+                    pointsList.add(points);
+                }
+
+                mLeaderboard = new Leaderboard(pointsList);
+                Log.d("Usman_Leaderboard", mLeaderboard.getPointsList().get(0).getName());
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        return mLeaderboard;
+    }
 }
