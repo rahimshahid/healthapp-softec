@@ -18,6 +18,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.university.rahim.softecapp.Pojos.Points;
+import com.university.rahim.softecapp.Pojos.User;
 import com.university.rahim.softecapp.R;
 
 public class Register extends AppCompatActivity {
@@ -119,7 +123,6 @@ public class Register extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()) {
-                                        dialog.dismiss();
 
                                         mFirebaseAuth.getCurrentUser().sendEmailVerification()
                                                 .addOnCompleteListener(Register.this, new OnCompleteListener<Void>() {
@@ -135,6 +138,20 @@ public class Register extends AppCompatActivity {
                                                 });
 
                                         Toast.makeText(Register.this, "User registered! Please verify email!", Toast.LENGTH_LONG).show();
+
+                                        User user = new User(mName.getEditText().getText().toString().trim(),
+                                                Double.parseDouble(mHeight.getEditText().getText().toString().trim()),
+                                                Double.parseDouble(mWeight.getEditText().getText().toString().trim()),
+                                                null );
+
+                                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                                        ref.child(mFirebaseAuth.getCurrentUser().getUid()).setValue(user);
+
+                                        ref = FirebaseDatabase.getInstance().getReference("Leaderboard");
+
+                                        Points points = new Points(mFirebaseAuth.getCurrentUser().getUid(),user.getName(),0);
+                                        ref.child(mFirebaseAuth.getCurrentUser().getUid()).setValue(points);
+
                                         Intent intent = new Intent(Register.this, Login.class);
                                         startActivity(intent);
                                         finish();
