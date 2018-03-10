@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SoftecApp.iml" filepath="$PROJECT_DIR$/SoftecApp.iml" />
+      <module fileurl="file://C:\Users\Me\Documents\softecapp\SoftecApp.iml" filepath="C:\Users\Me\Documents\softecapp\SoftecApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Me\Documents\softecapp\app\app.iml" filepath="C:\Users\Me\Documents\softecapp\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/softecapp.iml" filepath="$PROJECT_DIR$/.idea/softecapp.iml" />
     </modules>
   </component>
 </project>
