@@ -1,7 +1,9 @@
-package com.university.rahim.softecapp;
+package com.university.rahim.softecapp.UI;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.university.rahim.softecapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
