@@ -101,7 +101,7 @@ public class HomeActivity extends AppCompatActivity {
         graph.getViewport().setMaxX(24);
         graph.getViewport().setYAxisBoundsManual(true);
 
-        NavDrawerInit();
+        //NavDrawerInit();
     }
 
     private void NavDrawerInit() {
@@ -152,6 +152,9 @@ public class HomeActivity extends AppCompatActivity {
                             case 2:
                                 break;
                             case 3:
+                                Intent i2 = new Intent(HomeActivity.this, ProfileActivity.class);
+                                i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i2);
                                 break;
                             case 4:
                                 HomeActivity.this.drawer.closeDrawer();

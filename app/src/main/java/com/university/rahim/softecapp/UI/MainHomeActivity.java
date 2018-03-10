@@ -46,6 +46,14 @@ public class MainHomeActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("Steps"));
     }
 
+    @Override
+    protected void onResume() {
+        if(drawer!=null && drawer.isDrawerOpen()) {
+            drawer.setSelectionAtPosition(1);
+        }
+        super.onResume();
+    }
+
     void CreateView(){
         NavDrawerInit();
 
@@ -70,6 +78,7 @@ public class MainHomeActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void NavDrawerInit() {
         new DrawerBuilder().withActivity(this).build();
@@ -98,6 +107,7 @@ public class MainHomeActivity extends AppCompatActivity {
         Drawer result = new DrawerBuilder()
                 .withActivity(this)
                 .withAccountHeader(headerResult)
+                .withSelectedItem(1)
                 .addDrawerItems(
                         item1,
                         new DividerDrawerItem(),
@@ -116,11 +126,14 @@ public class MainHomeActivity extends AppCompatActivity {
                             case 2:
                                 break;
                             case 3:
+                                Intent i = new Intent(MainHomeActivity.this, ProfileActivity.class);
+                                //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i);
                                 break;
                             case 4:
-                                Intent i = new Intent(MainHomeActivity.this, HomeActivity.class);
-                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(i);
+                                Intent i2 = new Intent(MainHomeActivity.this, HomeActivity.class);
+                                //i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i2);
                                 break;
                             case 5:
                                 FirebaseAuth.getInstance().signOut();
@@ -138,9 +151,9 @@ public class MainHomeActivity extends AppCompatActivity {
     private void setupCircleView(){
         mCircleView = this.findViewById(R.id.stepProgress);
         mCircleView.setRimWidth(70);
-        mCircleView.setMaxValue(100);
+        mCircleView.setMaxValue(6000);
         mCircleView.setValue(0);
-        mCircleView.setValueAnimated(LocalStore.getSteps(this) / 6000 * 100);
+        mCircleView.setValueAnimated(LocalStore.getSteps(this));
 
 
         //show unit
@@ -160,7 +173,7 @@ public class MainHomeActivity extends AppCompatActivity {
     }
 
     private void updateViews(int steps, int cals, int runTime){
-        mCircleView.setValueAnimated(steps / 6000 * 100);
+         mCircleView.setValue(steps);
         ((TextView)this.findViewById(R.id.stepsWalked)).setText(steps + " Steps");
         ((TextView)this.findViewById(R.id.calburned)).setText((int)LocalStore.getCals(this) + " Calories Burned");
         ((TextView)this.findViewById(R.id.distwalked)).setText((int)LocalStore.getDistance(this) + " KM Walked");

@@ -32,7 +32,8 @@
 
         <activity
             android:name=".UI.MainHomeActivity"
-            android:theme="@style/CustomTheme"></activity>
+            android:theme="@style/CustomTheme"
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".UI.ProfileActivity"></activity>
     </application>
 
