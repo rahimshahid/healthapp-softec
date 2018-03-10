@@ -70,8 +70,7 @@ public class HomeActivity extends AppCompatActivity {
         plotGraph();
 
         //Start Step Service
-        Intent mServiceIntent = new Intent(this, StepCountService.class);
-        this.startService(mServiceIntent);
+       StepCountService.Start(this);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("Steps"));
         startTimerThreadToUpdateTextBoxSpeed();

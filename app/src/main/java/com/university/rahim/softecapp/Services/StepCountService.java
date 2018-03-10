@@ -5,6 +5,8 @@ package com.university.rahim.softecapp.Services;
  */
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
@@ -14,6 +16,8 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -22,9 +26,12 @@ import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.university.rahim.softecapp.R;
+import com.university.rahim.softecapp.UI.HomeActivity;
 import com.university.rahim.softecapp.Utils.CalorieBurnedCalculator;
 import com.university.rahim.softecapp.Utils.DistanceCalculator;
 import com.university.rahim.softecapp.Utils.FeedReaderDbHelper;
@@ -157,6 +164,11 @@ public class StepCountService extends Service implements SensorEventListener {
         timer.schedule(new checkRunning(),0, 1000);
     }
 
+    public static void Start(Context c){
+        Intent mServiceIntent = new Intent(c, StepCountService.class);
+        c.startService(mServiceIntent);
+    }
+
     private void resetAll(){
         high_G=false;
         low_G=false;
@@ -173,6 +185,28 @@ public class StepCountService extends Service implements SensorEventListener {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Intent notificationIntent = new Intent(this, HomeActivity.class);
+        notificationIntent.setAction("HomeActivity");
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                notificationIntent, 0);
+
+        Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                R.drawable.foot);
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle("Step Count")
+                .setTicker("StepCount")
+                .setContentText("Progress")
+                .setSmallIcon(R.drawable.foot)
+                .setProgress(100, (stepCount / 6000) * 100, false)
+                .setLargeIcon(
+                        Bitmap.createScaledBitmap(icon, 128, 128, false))
+                .setContentIntent(pendingIntent)
+                .setOngoing(true)
+                .build();
+        startForeground(101, notification);
         return START_STICKY;
     }
 
@@ -300,6 +334,7 @@ public class StepCountService extends Service implements SensorEventListener {
             prev_location_update_time=time;
             Intent i = new Intent("LocationUpdate");
             LocalBroadcastManager.getInstance(this).sendBroadcast(i);
+            Start(getApplication().getApplicationContext());
         }
     }
 
