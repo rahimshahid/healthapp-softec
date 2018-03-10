@@ -11,52 +11,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_workout_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hello World!"
-            android:layout_margin="50dp"/>
-
-        <ImageView
+        <Button
+            android:id="@+id/btn_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+            android:text="Logout!"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sets:"
-                android:layout_margin="15dp"/>
-            <TextView
-                android:id="@+id/tv_sets"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reps:"
-                android:layout_margin="15dp"/>
-            <TextView
-                android:id="@+id/tv_reps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"/>
-
-        </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_basic_calorie_burn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="50dp"/>
 
     </LinearLayout>
 
