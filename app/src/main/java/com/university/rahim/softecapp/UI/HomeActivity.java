@@ -192,6 +192,7 @@ public class HomeActivity extends AppCompatActivity {
         }
         //series.appendData(new DataPoint(12,50),true,24);
         series.setSpacing(10);
+        series.setColor(R.color.colorGreen);
         graph.addSeries(series);
         graph.setTitle("Hourly Steps");
         graph.getViewport().setMaxY(max+(0.1*max));
