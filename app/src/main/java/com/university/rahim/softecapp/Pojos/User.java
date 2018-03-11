@@ -49,4 +49,14 @@ public class User {
     public void setDOB(Date DOB) {
         this.DOB = DOB;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", DOB=" + DOB +
+                '}';
+    }
 }
