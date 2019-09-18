@@ -1,5 +1,5 @@
 # healthapp-softec
-This application was developed in a 24 Hours Code Marathon during SOFTEC 2018.
+This application was developed in a 36 Hours continuos Code Marathon during SOFTEC 2018.
 
 # Features
 Automatic monitoring of your physical activity like running, walking, calories burned throughout the day and some nice analytics.
