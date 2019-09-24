@@ -15,7 +15,7 @@ Application makes use of the following major components
     is not available in the application. Includes custom step detection logic to be used with accelerometer sensor.
 
 2-  UI
-    Custom Slider View to track current day steps. Graphs and charts to show trends. Its just so awsome.
+    Custom Views to track current day steps. Graphs and charts to show trends. Its just so awsome.
     
 3-  Firebase Backend
     To provide authentication and database functionality.
